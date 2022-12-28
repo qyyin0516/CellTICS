@@ -1,3 +1,0 @@
-Ensembl2Reactome_All_Levels.txt filter=lfs diff=lfs merge=lfs -text
-ReactomePathways.txt filter=lfs diff=lfs merge=lfs -text
-ReactomePathwaysRelation.txt filter=lfs diff=lfs merge=lfs -text
