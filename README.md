@@ -8,3 +8,15 @@ CellTICS is built with Python 3 (>= 3.9.2) with the following packages:
 
 * numpy >= 1.23.1
 * pandas >= 1.2.3
+* keras >= 2.9.0
+* tensorflow >= 2.9.0
+* networkx >= 2.6.3
+* biomart >= 0.9.2
+
+## Installation
+Clone the github repository and enter CellTICS directory with
+
+  $ git clone https://github.com/qyyin0516/CellTICS.git
+  $ cd CellTICS
+  
+However, 
