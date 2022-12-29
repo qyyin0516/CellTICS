@@ -29,4 +29,16 @@ Placeholder.
     -dataset_name                   the name of dataset
 
 ### An example
-Run the following codes
+Run the following codes:
+
+        $ python -u code/get_gene_pathways.py -ensembl_pathway_relation 'reactome/Ensembl2Reactome_All_Levels.txt'
+        $ python -u code/main.py -dataset_name 'L5MB'\
+                                 -reference_data_path 'example_data/L5MB_rdata.csv'\
+                                 -query_data_path 'example_data/L5MB_qdata.csv'\
+                                 -reference_label_path 'example_data/L5MB_rlabel.csv'\
+                                 -query_label_path 'example_data/L5MB_qlabel.csv'\
+                                 -pathway_names 'reactome/ReactomePathways.txt'\
+                                 -pathway_genes 'ReactomeGenes.csv'\
+                                 -pathway_relation 'reactome/ReactomePathwaysRelation.txt'\
+
+The outputs xxx
