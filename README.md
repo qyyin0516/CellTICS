@@ -16,7 +16,7 @@ CellTICS is built with Python 3 (>= 3.9.2) with the following packages:
 ## Installation
 Clone the github repository and enter CellTICS directory with
 
-  $ git clone https://github.com/qyyin0516/CellTICS.git
-  $ cd CellTICS
+    $ git clone https://github.com/qyyin0516/CellTICS.git
+    $ cd CellTICS
   
 However, 
