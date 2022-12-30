@@ -25,8 +25,22 @@ However, `CellTICS/reactome/Ensembl2Reactome_All_Levels.txt` and `CellTICS/examp
 Placeholder.
 
 ### Options
+The following options are not null and should always be specified.
 
-    -dataset_name                   the name of dataset
+For `code/get_gene_pathways.py`:
+
+    -ensembl_pathway_relation       the relationship of all genes and pathways, given as 'reactome/Ensembl2Reactome_All_Levels.txt'
+
+For `code/main.py`:
+
+    -dataset_name                   name of dataset
+    -reference_data_path            path of reference scRNA-seq data
+    -query_data_path                path of query scRNA-seq data    
+    -reference_label_path           path of reference scRNA-seq label
+    -query_label_path               path of query scRNA-seq label 
+    -pathway_names                  pathway information, given as 'reactome/ReactomePathways.txt'
+    -pathway_relation               the hierarchy among the pathways, given as 'reactome/ReactomePathwaysRelation.txt'
+    
 
 ### An example
 Run the following codes:
@@ -38,7 +52,6 @@ Run the following codes:
                                  -reference_label_path 'example_data/L5MB_rlabel.csv'\
                                  -query_label_path 'example_data/L5MB_qlabel.csv'\
                                  -pathway_names 'reactome/ReactomePathways.txt'\
-                                 -pathway_genes 'ReactomeGenes.csv'\
                                  -pathway_relation 'reactome/ReactomePathwaysRelation.txt'\
 
 The outputs, containing predicted labels and important pathways, are in folder `CellTICS/L5MB_results`. The name before the underline (L5MB here) is the name of dataset.
