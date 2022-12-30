@@ -41,4 +41,9 @@ Run the following codes:
                                  -pathway_genes 'ReactomeGenes.csv'\
                                  -pathway_relation 'reactome/ReactomePathwaysRelation.txt'\
 
-The outputs xxx
+The outputs, containing predicted labels and important pathways, are in folder `CellTICS/L5MB_results`. The name before the underline (L5MB here) is the name of dataset.
+
+To get the ACC and macro F1 score of the prediction, run the following codes:
+        
+        $ python -u code/evaluate.py -true_label_path 'example_data/L5MB_qlabel.csv'\
+                                     -prediction_label_path 'L5MB_results/pred_y.csv'\
