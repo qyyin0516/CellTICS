@@ -21,7 +21,7 @@ parser.add_argument('-print_information', type=bool, default=True)
 
 parser.add_argument('-species', type=str, default='mouse')
 parser.add_argument('-pathway_names', type=str)
-parser.add_argument('-pathway_genes', type=str)
+parser.add_argument('-pathway_genes', type=str, default="ReactomeGenes.csv")
 parser.add_argument('-pathway_relation', type=str)
 parser.add_argument('-n_hidden_layer', type=int, default=5)
 
