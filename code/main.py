@@ -54,7 +54,7 @@ def main():
                                               normalization=args.normalization,
                                               marker=args.marker)
     ctp_subctp = ctp_subctp_relation(train_y)
-    pathway_genes = get_gene_pathways(args.ensembl_pathway_relation)
+    pathway_genes = get_gene_pathways(args.ensembl_pathway_relation, species=args.species)
 
     # big cell type prediction
     if args.print_information:

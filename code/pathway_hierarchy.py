@@ -37,7 +37,7 @@ class Reactome():
 
     def __init__(self, pathway_names, pathway_genes, relations_file_name, species):
         self.pathway_names = self.load_names(pathway_names)
-        self.pathway_genes = self.load_genes(pathway_genes)
+        self.pathway_genes = pathway_genes
         self.hierarchy = self.load_hierarchy(relations_file_name)
         self.species = species
 
@@ -45,11 +45,6 @@ class Reactome():
         filename = pathway_names
         df = pd.read_csv(filename, sep='\t')
         df.columns = ['reactome_id', 'pathway_name', 'species']
-        return df
-
-    def load_genes(self, pathway_genes):
-        filename = pathway_genes
-        df = pd.read_csv(filename, index_col=0)
         return df
 
     def load_hierarchy(self, relations_file_name):
@@ -150,7 +145,6 @@ def get_masking(pathway_names, pathway_genes, relations_file_name, train_x, test
     reactome_net = ReactomeNetwork(pathway_names, pathway_genes, relations_file_name, species)
     genes_df = reactome_net.reactome.pathway_genes
     genes_df = gene_mapping(train_x.index.tolist(), genes_df)
-
 
     original_network = reactome_net.netx
     original_terminal_nodes = [n for n, d in original_network.out_degree() if d == 0]
