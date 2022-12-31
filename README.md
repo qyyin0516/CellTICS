@@ -25,7 +25,7 @@ However, `CellTICS/reactome/Ensembl2Reactome_All_Levels.txt` and `CellTICS/examp
 Placeholder.
 
 ### Options
-The following options are not null and should always be specified.
+The following options should always be specified.
 
 For `code/get_gene_pathways.py`:
 
@@ -41,6 +41,30 @@ For `code/main.py`:
     -pathway_names                  pathway information, given as 'reactome/ReactomePathways.txt'
     -pathway_relation               the hierarchy among the pathways, given as 'reactome/ReactomePathwaysRelation.txt'
     
+ The following options have default settings and do not have to be specified.
+ 
+ For `code/get_gene_pathways.py`:
+
+    -species                        species which the dataset is from, default: 'mouse'
+    
+ For `code/main.py`:
+    
+    -print_information              if the information of training procedure is printed, default: True
+    -ensembl                        if genes are represented as Ensembl ID, default: True
+    -species                        species which the dataset is from, default: 'mouse'
+    -normalization                  if the data is normalized, default: True
+    -marker                         if marker genes are extracted, default: True
+    -highly_expressed_threshold     threshold for highly expressed genes, default: 0.95
+    -lowly_expressed_threshold      threshold for lowly expressed genes, default: 0.9
+    -n_hidden_layer                 number of hidden layers of the neural network, default: 5
+    -epoch_ctp                      epochs for training the neural network for cell type, default: 10
+    -epoch_subctp                   epochs for training the neural network for sub-cell type, default: 10
+    -learning_rate                  learning rate, default: 0.001
+    -batch_size                     batch size, default: 32
+    -l2_regularization              L2 regularization parameter, default: 0.0001
+    -print_cost                     if the cost of each epoch is printed, default: False
+    -pathway_importance_threshold   threshold to measure the pathway is important for the cell type, default: 0.1
+
 
 ### An example
 Run the following codes:
