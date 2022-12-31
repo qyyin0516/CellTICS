@@ -27,16 +27,13 @@ The input of CellTICS are reference scRNA-seq data, reference label, and query d
 ### Options
 The following options should always be specified.
 
-For `code/get_gene_pathways.py`:
-
-    -ensembl_pathway_relation       the relationship of all genes and pathways, given as 'reactome/Ensembl2Reactome_All_Levels.txt'
-
 For `code/main.py`:
 
     -dataset_name                   name of dataset
     -reference_data_path            path of reference scRNA-seq data
     -query_data_path                path of query scRNA-seq data    
     -reference_label_path           path of reference scRNA-seq label
+    -ensembl_pathway_relation       the relationship of all genes and pathways, given as 'reactome/Ensembl2Reactome_All_Levels.txt'
     -pathway_names                  pathway information, given as 'reactome/ReactomePathways.txt'
     -pathway_relation               the hierarchy among the pathways, given as 'reactome/ReactomePathwaysRelation.txt'
 
@@ -46,10 +43,6 @@ For `code/evaluate.py`:
     -prediction_label_path          path of predicted labels of query data
     
 The following options have default settings and do not have to be specified.
- 
-For `code/get_gene_pathways.py`:
-
-    -species                        species which the dataset is from, default: 'mouse'
     
 For `code/main.py`:
     
@@ -73,15 +66,14 @@ For `code/main.py`:
 ### An example
 Run the following codes:
 
-        $ python -u code/get_gene_pathways.py -ensembl_pathway_relation 'reactome/Ensembl2Reactome_All_Levels.txt'
         $ python -u code/main.py -dataset_name 'L5MB'\
                                  -reference_data_path 'example_data/L5MB_rdata.csv'\
                                  -query_data_path 'example_data/L5MB_qdata.csv'\
                                  -reference_label_path 'example_data/L5MB_rlabel.csv'\
-                                 -query_label_path 'example_data/L5MB_qlabel.csv'\
+                                 -ensembl_pathway_relation 'reactome/Ensembl2Reactome_All_Levels.txt'\
                                  -pathway_names 'reactome/ReactomePathways.txt'\
                                  -pathway_relation 'reactome/ReactomePathwaysRelation.txt'\
-
+                                 
 The outputs, containing predicted labels and important pathways, are in folder `L5MB_results`. The name before the underline (L5MB here) is the name of dataset.
 
 To get the ACC and macro F1 score of the prediction, run the following codes:
