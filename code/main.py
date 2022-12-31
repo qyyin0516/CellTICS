@@ -19,8 +19,8 @@ parser.add_argument('-marker', type=bool, default=True)
 parser.add_argument('-print_information', type=bool, default=True)
 
 parser.add_argument('-species', type=str, default='mouse')
+parser.add_argument('-ensembl_pathway_relation', type=str)
 parser.add_argument('-pathway_names', type=str)
-parser.add_argument('-pathway_genes', type=str)
 parser.add_argument('-pathway_relation', type=str)
 parser.add_argument('-n_hidden_layer', type=int, default=5)
 
@@ -54,12 +54,13 @@ def main():
                                               normalization=args.normalization,
                                               marker=args.marker)
     ctp_subctp = ctp_subctp_relation(train_y)
+    pathway_genes = get_gene_pathways(args.ensembl_pathway_relation)
 
     # big cell type prediction
     if args.print_information:
         print("Current prediction is for big cell type.")
     masking, layers_node, train_x, test_x = get_masking(args.pathway_names,
-                                                        args.pathway_genes,
+                                                        pathway_genes,
                                                         args.pathway_relation,
                                                         train_x,
                                                         test_x,
@@ -121,7 +122,7 @@ def main():
         if test_x_sub.shape[1] == 0:
             continue
         masking_sub, layers_node_sub, train_x_sub, test_x_sub = get_masking(args.pathway_names,
-                                                                            args.pathway_genes,
+                                                                            pathway_genes,
                                                                             args.pathway_relation,
                                                                             train_x_sub,
                                                                             test_x_sub,
