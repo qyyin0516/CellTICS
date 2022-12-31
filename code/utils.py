@@ -55,20 +55,15 @@ def softmax(x):
     return softmax
 
 
-def one_hot_coding(train_y, test_y, datatype):
+def one_hot_coding(train_y, datatype):
     Y_train_df = pd.get_dummies(train_y[datatype])
-    Y_test_temp = pd.get_dummies(test_y[datatype])
-    Y_test_df = pd.DataFrame(data=0, index=Y_test_temp.index, columns=list(Y_train_df.columns))
-    for i in range(Y_test_temp.shape[1]):
-        Y_test_df[Y_test_temp.columns[i]] = Y_test_temp.iloc[:, i]
     Y_train = np.array(Y_train_df).T
-    Y_test = np.array(Y_test_df).T
-    return Y_train, Y_test
+    return Y_train
 
 
-def get_prediction(output, train_y, test_y, datatype):
+def get_prediction(output, train_y, test_x, datatype):
     output_softmax = output
-    y_pred = pd.DataFrame(data=0, index=test_y.index, columns=[datatype])
+    y_pred = pd.DataFrame(data=0, index=test_x.columns, columns=[datatype])
     for i in range(output_softmax.shape[1]):
         value = softmax(output[:, i].reshape(output[:, i].shape[0], 1))
         output_softmax[:, i] = value.reshape(value.shape[0],)

@@ -38,7 +38,7 @@ def fmkg(phi, rho, thr1=0.95, thr2=0.9):
   return mkh, mkl
 
 
-def get_expression(rdata, qdata, rlabel, qlabel, thrh=0.95, thrl=0.9, normalization=True, marker=True):
+def get_expression(rdata, qdata, rlabel, thrh=0.95, thrl=0.9, normalization=True, marker=True):
     # calculate sum of cell type
     rulabel = rlabel.iloc[:, 0].unique()
     rdt = pd.DataFrame(data=None, columns=None)
@@ -77,13 +77,11 @@ def get_expression(rdata, qdata, rlabel, qlabel, thrh=0.95, thrl=0.9, normalizat
     rdt = rdt.loc[gid, :]
 
     rlabel.index = rdata.columns
-    qlabel.index = qdata.columns
 
     if not marker:
         train_x = rdata
         train_y = rlabel
         test_x = qdata
-        test_y = qlabel
     else:
         # calculate important genes
         phi = fphi(rdt)
@@ -95,5 +93,4 @@ def get_expression(rdata, qdata, rlabel, qlabel, thrh=0.95, thrl=0.9, normalizat
         train_x = rdata.loc[mkg, :]
         train_y = rlabel
         test_x = qdata.loc[mkg, :]
-        test_y = qlabel
-    return train_x, test_x, train_y, test_y
+    return train_x, test_x, train_y

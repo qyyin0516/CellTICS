@@ -11,7 +11,6 @@ parser.add_argument('-dataset_name', type=str)
 parser.add_argument('-reference_data_path', type=str)
 parser.add_argument('-query_data_path', type=str)
 parser.add_argument('-reference_label_path', type=str)
-parser.add_argument('-query_label_path', type=str)
 parser.add_argument('-ensembl', type=bool, default=True)
 parser.add_argument('-highly_expressed_threshold', type=float, default=0.95)
 parser.add_argument('-lowly_expressed_threshold', type=float, default=0.9)
@@ -21,11 +20,11 @@ parser.add_argument('-print_information', type=bool, default=True)
 
 parser.add_argument('-species', type=str, default='mouse')
 parser.add_argument('-pathway_names', type=str)
-parser.add_argument('-pathway_genes', type=str, default="ReactomeGenes.csv")
+parser.add_argument('-pathway_genes', type=str)
 parser.add_argument('-pathway_relation', type=str)
 parser.add_argument('-n_hidden_layer', type=int, default=5)
 
-parser.add_argument('-epoch_bigctp', type=int, default=10)
+parser.add_argument('-epoch_ctp', type=int, default=10)
 parser.add_argument('-epoch_subctp', type=int, default=50)
 parser.add_argument('-learning_rate', type=float, default=0.001)
 parser.add_argument('-batch_size', type=int, default=32)
@@ -43,19 +42,17 @@ def main():
     rdata = pd.read_csv(args.reference_data_path, index_col=0)
     qdata = pd.read_csv(args.query_data_path, index_col=0)
     rlabel = pd.read_csv(args.reference_label_path)
-    qlabel = pd.read_csv(args.query_label_path)
     if not args.ensembl:
         rdata = symbol_to_ensembl(rdata, species=args.species)
         qdata = symbol_to_ensembl(qdata, species=args.species)
 
-    train_x, test_x, train_y, test_y = get_expression(rdata,
-                                                      qdata,
-                                                      rlabel,
-                                                      qlabel,
-                                                      thrh=args.highly_expressed_threshold,
-                                                      thrl=args.lowly_expressed_threshold,
-                                                      normalization=args.normalization,
-                                                      marker=args.marker)
+    train_x, test_x, train_y = get_expression(rdata,
+                                              qdata,
+                                              rlabel,
+                                              thrh=args.highly_expressed_threshold,
+                                              thrl=args.lowly_expressed_threshold,
+                                              normalization=args.normalization,
+                                              marker=args.marker)
     ctp_subctp = ctp_subctp_relation(train_y)
 
     # big cell type prediction
@@ -70,18 +67,18 @@ def main():
                                                         datatype='celltype',
                                                         species=args.species,
                                                         n_hidden=args.n_hidden_layer)
-    pred_y_df = pd.DataFrame(data=0, index=test_y.index, columns=list(range(2, len(masking) + 2)))
+    pred_y_df = pd.DataFrame(data=0, index=test_x.columns, columns=list(range(2, len(masking) + 2)))
     activation_output = {}
     for output_layer in range(2, len(masking) + 2):
         if args.print_information:
             print("Current sub-neural network has " + str(output_layer - 1) + " hidden layers.")
         output_train, output_test = model(np.array(train_x),
-                                          one_hot_coding(train_y, test_y, 'celltype')[0],
+                                          one_hot_coding(train_y, 'celltype'),
                                           np.array(test_x),
                                           layers_node,
                                           masking,
                                           output_layer,
-                                          num_epochs=args.epoch_bigctp,
+                                          num_epochs=args.epoch_ctp,
                                           learning_rate=args.learning_rate,
                                           minibatch_size=args.batch_size,
                                           gamma=args.l2_regularization,
@@ -100,9 +97,9 @@ def main():
         activation_output[output_layer] = output_train
         pred_y_df[output_layer] = get_prediction(output_test[output_layer],
                                                  pd.get_dummies(train_y['celltype']),
-                                                 pd.get_dummies(test_y['celltype']),
+                                                 test_x,
                                                  datatype='celltype')
-    pred_y = pd.DataFrame(data=0, index=test_y.index, columns=['celltype'])
+    pred_y = pd.DataFrame(data=0, index=test_x.columns, columns=['celltype'])
     pred_y['celltype'] = pred_y_df.T.describe().T['top']
     pred_y.insert(1, 'subcelltype', 0)
     if args.print_information:
@@ -121,7 +118,6 @@ def main():
         train_y_sub = train_y[(train_y["celltype"] == l)]
         train_x_sub = train_x.loc[:, train_y_sub.index.tolist()]
         test_x_sub = test_x.loc[:, pred_y[(pred_y["celltype"] == l)].index.tolist()]
-        test_y_sub = test_y.loc[pred_y[(pred_y["celltype"] == l)].index.tolist(), :]
         if test_x_sub.shape[1] == 0:
             continue
         masking_sub, layers_node_sub, train_x_sub, test_x_sub = get_masking(args.pathway_names,
@@ -133,13 +129,13 @@ def main():
                                                                             datatype='subcelltype',
                                                                             species=args.species,
                                                                             n_hidden=args.n_hidden_layer)
-        pred_y_df_sub = pd.DataFrame(data=0, index=test_y_sub.index, columns=list(range(2, len(masking_sub) + 2)))
+        pred_y_df_sub = pd.DataFrame(data=0, index=test_x_sub.columns, columns=list(range(2, len(masking_sub) + 2)))
         activation_output_sub = {}
         for output_layer_sub in range(2, len(masking_sub) + 2):
             if args.print_information:
                 print("Current sub-neural network has " + str(output_layer_sub - 1) + " hidden layers.")
             output_train_sub, output_test_sub = model(np.array(train_x_sub),
-                                                      one_hot_coding(train_y_sub, test_y_sub, 'subcelltype')[0],
+                                                      one_hot_coding(train_y_sub, 'subcelltype'),
                                                       np.array(test_x_sub),
                                                       layers_node_sub,
                                                       masking_sub,
@@ -162,7 +158,7 @@ def main():
             activation_output_sub[output_layer_sub] = output_train_sub
             pred_y_df_sub[output_layer_sub] = get_prediction(output_test_sub[output_layer_sub],
                                                              pd.get_dummies(train_y_sub['subcelltype']),
-                                                             pd.get_dummies(test_y_sub['subcelltype']),
+                                                             test_x_sub,
                                                              'subcelltype')
 
         pred_y.loc[pred_y_df_sub.index.tolist(), 'subcelltype'] = pred_y_df_sub.T.describe().T['top']
