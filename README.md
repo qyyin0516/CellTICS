@@ -22,7 +22,7 @@ Clone the github repository and enter CellTICS directory with
 However, `CellTICS/reactome/Ensembl2Reactome_All_Levels.txt` and `CellTICS/example_data/example_data.zip` are stored with Git LFS because they are larger than 25MB. Please download the two files directly via the github page. After downloading them, please put `Ensembl2Reactome_All_Levels.txt` to `CellTICS/reactome`. Then, after unzipping `example_data.zip`, please put the unzipped folder `example_data` to `CellTICS`. Sorry for any inconvenience! 
 
 ## Usage
-Placeholder.
+The input of CellTICS are reference scRNA-seq data, reference label, and query data. Reference data and query data should be a gene-by-cell matrix. Reference label should be a two-column matrix representing cell type and sub-cell type of each cell. Dataset name should be specified. Pathway information, pathway hierarchy and relationship of genes and pathways should be also specified, while they are all in folder `reactome`. Then, after running CellTICS, the outputs can be obtained. One file is the predicted labels of the query data, a two-column matrix representing cell type and sub-cell type of each cell. Another file is important pathways for each cell type and sub-cell type. We also offer an evaluating function to get the ACC and macro F1 score of the prediction.
 
 ### Options
 The following options should always be specified.
@@ -37,17 +37,21 @@ For `code/main.py`:
     -reference_data_path            path of reference scRNA-seq data
     -query_data_path                path of query scRNA-seq data    
     -reference_label_path           path of reference scRNA-seq label
-    -query_label_path               path of query scRNA-seq label 
     -pathway_names                  pathway information, given as 'reactome/ReactomePathways.txt'
     -pathway_relation               the hierarchy among the pathways, given as 'reactome/ReactomePathwaysRelation.txt'
+
+For `code/evaluate.py`:
+
+    -true_label_path                path of true labels of query data
+    -prediction_label_path          path of predicted labels of query data
     
- The following options have default settings and do not have to be specified.
+The following options have default settings and do not have to be specified.
  
- For `code/get_gene_pathways.py`:
+For `code/get_gene_pathways.py`:
 
     -species                        species which the dataset is from, default: 'mouse'
     
- For `code/main.py`:
+For `code/main.py`:
     
     -print_information              if the information of training procedure is printed, default: True
     -ensembl                        if genes are represented as Ensembl ID, default: True
@@ -78,7 +82,7 @@ Run the following codes:
                                  -pathway_names 'reactome/ReactomePathways.txt'\
                                  -pathway_relation 'reactome/ReactomePathwaysRelation.txt'\
 
-The outputs, containing predicted labels and important pathways, are in folder `CellTICS/L5MB_results`. The name before the underline (L5MB here) is the name of dataset.
+The outputs, containing predicted labels and important pathways, are in folder `L5MB_results`. The name before the underline (L5MB here) is the name of dataset.
 
 To get the ACC and macro F1 score of the prediction, run the following codes:
         
