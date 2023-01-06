@@ -1,7 +1,7 @@
-# CellTICS: an interpretable neural network for cell type identification based on single-cell RNA-seq data
-CellTICS is a biologically interpretable neural network for (sub-) cell type identification based on single-cell RNA-seq data. It prioritizes marker genes with cell-type specific high and low expression score, uses a hierarchy of biological pathways for neural network construction, and applies a two-stage strategy to predict cell types and sub-cell types. CellTICS corresponds to the following paper:
+# CellTICS: an interpretable neural network for cell-type identification and interpretation based on single-cell RNA-seq data
+CellTICS is a biologically interpretable neural network for (sub-) cell-type identification and interpretation based on single-cell RNA-seq data. It prioritizes marker genes with cell-type specific high and low expression score, uses a hierarchy of biological pathways for neural network construction, and applies a two-stage strategy to predict cell types and sub-cell types. CellTICS corresponds to the following paper:
 
-Yin, Q., Chen, L.. CellTICS: an interpretable neural network for cell type identification based on single-cell RNA-seq data, under review.
+Yin, Q., Chen, L.. CellTICS: an interpretable neural network for cell-type identification and interpretation based on single-cell RNA-seq data, under review.
 
 ## Dependencies
 CellTICS is built with Python 3 (>= 3.9.2) with the following packages:
@@ -22,7 +22,7 @@ Clone the github repository and enter CellTICS directory with
 However, `CellTICS/reactome/Ensembl2Reactome_All_Levels.txt` and `CellTICS/example_data/example_data.zip` are stored with Git LFS because they are larger than 25MB. Please download the two files directly via the github page. After downloading them, please put `Ensembl2Reactome_All_Levels.txt` to `CellTICS/reactome`. Then, after unzipping `example_data.zip`, please put the unzipped folder `example_data` to `CellTICS`. Sorry for any inconvenience! 
 
 ## Usage
-The input of CellTICS are reference scRNA-seq data, reference label, and query data. Reference data and query data should be a gene-by-cell matrix. Reference label should be a two-column matrix representing cell type and sub-cell type of each cell. Dataset name should be specified. Pathway information, pathway hierarchy and relationship of genes and pathways should be also specified, while they are all in folder `reactome`. Then, after running CellTICS, the outputs can be obtained. One file is the predicted labels of the query data, a two-column matrix representing cell type and sub-cell type of each cell. Another file is important pathways for each cell type and sub-cell type. We also offer an evaluating function to get the ACC and macro F1 score of the prediction.
+The input of CellTICS are reference scRNA-seq data, reference label, and query data. Reference data and query data should be a gene-by-cell matrix. Reference label should be a two-column matrix representing cell type and sub-cell type of each cell. Dataset name should be specified. Pathway information, pathway hierarchy and relationship of genes and pathways should be also specified, while they are all in folder `reactome`. Then, after running CellTICS, the outputs can be obtained. One file is the predicted labels of the query data, a two-column matrix representing cell type and sub-cell type of each cell. Another files are important pathways for each cell type and sub-cell type. We also offer an evaluating function to get the ACC and macro F1 score of the prediction.
 
 ### Options
 The following options should always be specified.
