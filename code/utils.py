@@ -5,7 +5,7 @@ import biomart
 
 
 def symbol_to_ensembl(dt, species='mouse'):
-    server = biomart.BiomartServer('http://uswest.ensembl.org/biomart')
+    server = biomart.BiomartServer('http://useast.ensembl.org/biomart')
     if species == 'mouse':
         mart = server.datasets['mmusculus_gene_ensembl']
     elif species == 'human':
