@@ -1,7 +1,11 @@
 # CellTICS: an explainable neural network for cell-type identification and interpretation based on single-cell RNA-seq data
 CellTICS is a biologically interpretable neural network for (sub-) cell-type identification and interpretation based on single-cell RNA-seq data. It prioritizes marker genes with cell-type specific high and low expression score, uses a hierarchy of biological pathways for neural network construction, and applies a two-stage strategy to predict cell types and sub-cell types. CellTICS corresponds to the following paper:
 
-Yin, Q., Chen, L.. CellTICS: an explainable neural network for cell-type identification and interpretation based on single-cell RNA-seq data, under review.
+Yin, Q., Chen, L.. CellTICS: an explainable neural network for cell-type identification and interpretation based on single-cell RNA-seq data, Brief Bioinform, 2024, 25(1): bbad449. https://doi.org/10.1093/bib/bbad449
+
+scIAE corresponds to the following paper:
+
+Yin, Q., Wang, Y., Guan, J., Ji, G.. scIAE: an integrative autoencoder-based ensemble classification framework for single-cell RNA-seq data, 
 
 ## Dependencies
 CellTICS is built with Python 3 (>= 3.9.2) with the following packages:
