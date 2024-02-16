@@ -21,6 +21,8 @@ Clone the github repository and enter CellTICS directory with
   
 However, `CellTICS/reactome/Ensembl2Reactome_All_Levels.txt` and `CellTICS/example_data/example_data.zip` are stored with Git LFS because they are larger than 25MB. Please download the two files directly via the github page. After downloading them, please put `Ensembl2Reactome_All_Levels.txt` to `CellTICS/reactome`. Then, after unzipping `example_data.zip`, please put the unzipped folder `example_data` to `CellTICS`. Sorry for any inconvenience! 
 
+In case Git LFS doesn't work, you may use this link to download the two files: https://drive.google.com/drive/folders/1LcucYztvUO8T6H_ETKQRKQgdGFWuYVmD?usp=sharing.
+
 ## Usage
 The input of CellTICS are reference scRNA-seq data, reference label, and query data. Reference data and query data should be a gene-by-cell matrix. Reference label should be a two-column matrix representing cell type and sub-cell type of each cell. Dataset name should be specified. Pathway information, pathway hierarchy and relationship of genes and pathways should be also specified, while they are all in folder `reactome`. Then, after running CellTICS, the outputs can be obtained. One file is the predicted labels of the query data, a two-column matrix representing cell type and sub-cell type of each cell. Another files are important pathways for each cell type and sub-cell type. We also offer an evaluating function to get the ACC and macro F1 score of the prediction.
 
